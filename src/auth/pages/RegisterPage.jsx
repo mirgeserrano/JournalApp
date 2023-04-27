@@ -3,8 +3,12 @@ import { Link as LinkRouter } from "react-router-dom";
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../hooks";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { startWinthEmailPassword } from "../../store/auth/thunks";
 
 export const RegisterPage = () => {
+  const Dispatch = useDispatch();
   const ini = {
     displayName: "mirge",
     email: "Mirgeserrano@gmail.com",
@@ -43,6 +47,9 @@ export const RegisterPage = () => {
     event.preventDefault();
     setformSubmited(true);
     if (!isFormValid) return;
+
+    Dispatch(startWinthEmailPassword(formState));
+    console.log(formState);
     // dispatch(checkingCredentials());
   };
 
