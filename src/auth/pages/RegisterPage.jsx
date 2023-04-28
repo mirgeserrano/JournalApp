@@ -1,9 +1,16 @@
-import { Button, Grid, Link, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Button,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Link as LinkRouter } from "react-router-dom";
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../hooks";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { startWinthEmailPassword } from "../../store/auth/thunks";
 
@@ -15,6 +22,11 @@ export const RegisterPage = () => {
     password: "123456",
   };
   const [formSubmited, setformSubmited] = useState(false);
+  const { status, errorMessage } = useSelector((state) => state.auth);
+  const inCheckingAnthentication = useMemo(
+    () => status === "cheking",
+    [status]
+  );
 
   const er =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -106,8 +118,26 @@ export const RegisterPage = () => {
             spacing={1}
             sx={{ mb: 2, mt: 1 }}
           >
+            <Grid item xs={12} display={errorMessage ? "" : "none"}>
+              <Grid item xs={12} sm={6} sx={{ mt: 1 }}>
+                <Alert severity="error">{errorMessage}</Alert>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid
+            container
+            justifyContent="center"
+            spacing={1}
+            sx={{ mb: 2, mt: 1 }}
+          >
             <Grid item xs={12} sm={6} sx={{ mt: 1 }}>
-              <Button fullWidth variant="contained" type="submit">
+              <Button
+                fullWidth
+                disabled={inCheckingAnthentication}
+                variant="contained"
+                type="submit"
+              >
                 Crear cuenta
               </Button>
             </Grid>
