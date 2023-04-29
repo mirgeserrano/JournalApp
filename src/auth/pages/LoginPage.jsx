@@ -22,19 +22,16 @@ export const LoginPage = () => {
   const { status, errorMessage } = useSelector((state) => state.auth);
 
   const { email, password, onInputChange } = useForm({
-    email: "Mirgeserrano@gmail.com",
-    password: "123456",
+    email: "",
+    password: "",
   });
 
   const isAunthenticating = useMemo(() => status === "cheking", [status]);
 
-  console.log(errorMessage);
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log({ email, password });
     dispatch(startLoginWithEmailPassaword({ email, password }));
   };
-  console.log(status);
   const onGoogleSingIn = () => {
     console.log("onGoogleSingI");
     dispatch(startGoogleSignIn());
@@ -42,7 +39,10 @@ export const LoginPage = () => {
 
   return (
     <AuthLayout title="Login">
-      <form onSubmit={onSubmit}>
+      <form
+        onSubmit={onSubmit}
+        className="animate__animated animate__fadeIn animate__delay-1s"
+      >
         <Grid container>
           <Grid item xs={12} sx={{ mt: 2 }}>
             <TextField
@@ -80,7 +80,9 @@ export const LoginPage = () => {
                 variant="contained"
                 fullWidth
               >
-                login
+                <Link component={LinkRouter} color="inherit" to="/JournalPagen">
+                  login
+                </Link>
               </Button>
             </Grid>
 

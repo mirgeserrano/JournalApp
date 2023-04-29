@@ -13,8 +13,12 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { startLogout } from "../../store/auth/thunks";
 
 export const SideBar = ({ drawerWidth = 240 }) => {
+  const { displayName, uid } = useSelector((state) => state.auth);
+  console.log({ displayName, uid });
   return (
     <Box
       component="nav"
@@ -36,7 +40,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
       >
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
-            Mirgelys Serrano
+            {displayName}
           </Typography>
         </Toolbar>
         <Divider />
