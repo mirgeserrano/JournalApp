@@ -17,16 +17,10 @@ import { startWinthEmailPassword } from "../../store/auth/thunks";
 export const RegisterPage = () => {
   const Dispatch = useDispatch();
   const ini = {
-    displayName: "mirge",
-    email: "Mirgeserrano@gmail.com",
+    displayName: "",
+    email: "",
     password: "123456",
   };
-  const [formSubmited, setformSubmited] = useState(false);
-  const { status, errorMessage } = useSelector((state) => state.auth);
-  const inCheckingAnthentication = useMemo(
-    () => status === "cheking",
-    [status]
-  );
 
   const er =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -54,7 +48,14 @@ export const RegisterPage = () => {
     passwordValid,
     isFormValid,
   } = useForm(ini, formValidations);
+  console.log({ email });
 
+  const [formSubmited, setformSubmited] = useState(false);
+  const { status, errorMessage } = useSelector((state) => state.auth);
+  const inCheckingAnthentication = useMemo(
+    () => status === "cheking",
+    [status]
+  );
   const onSubmit = (event) => {
     event.preventDefault();
     setformSubmited(true);

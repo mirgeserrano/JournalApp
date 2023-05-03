@@ -15,10 +15,12 @@ import {
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { startLogout } from "../../store/auth/thunks";
+import { SideBarItem } from "./SideBarItem";
 
 export const SideBar = ({ drawerWidth = 240 }) => {
   const { displayName, uid } = useSelector((state) => state.auth);
-  console.log({ displayName, uid });
+  const { notes } = useSelector((state) => state.journal);
+
   return (
     <Box
       component="nav"
@@ -44,22 +46,10 @@ export const SideBar = ({ drawerWidth = 240 }) => {
           </Typography>
         </Toolbar>
         <Divider />
-        <List>
-          {["enero", "enero1", "enero2", "enero3", "enero4"].map((max) => (
-            <ListItem key={max} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <TurnedInNot />
-                </ListItemIcon>
-                <Grid container>
-                  <ListItemText primary={max} />
 
-                  <ListItemText
-                    secondary={"Consectetur laboris quis laborum"}
-                  />
-                </Grid>
-              </ListItemButton>
-            </ListItem>
+        <List>
+          {notes.map((note) => (
+            <SideBarItem key={note.id} {...note} />
           ))}
         </List>
       </Drawer>

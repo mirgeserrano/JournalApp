@@ -2,27 +2,35 @@ import { IconButton, Typography } from "@mui/material";
 import { JournalLayout } from "../layout/JournalLayout";
 import { NoteView, NothingSelectedView } from "../views";
 import { AddOutlined } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
+import { starNewNota } from "../../store/journal";
+import { useMemo } from "react";
 
 export const JournalPagen = () => {
+  const dispatch = useDispatch();
+  const { isSaving, active } = useSelector((state) => state.journal);
+  console.log(!active);
+
+  const onclickNewNota = () => {
+    dispatch(starNewNota());
+  };
+
   return (
     <>
       <JournalLayout>
-        {/* <Typography variant="h6">
-          Ut do adipisicing voluptate ad velit tempor ipsum cupidatat esse
-          laborum. Aute et officia qui cillum tempor eu ad do et nisi incididunt
-          culpa qui do. Duis tempor eiusmod nisi minim deserunt Lorem sit duis.
-          Deserunt commodo enim occaecat do incididunt nostrud eiusmod. Anim
-          deserunt Lorem dolore ipsum. Consequat sint eiusmod incididunt enim
-          ullamco. Ex proident ut quis cillum laborum.
-        </Typography> */}
-        <NothingSelectedView />
-        {/* <NoteView /> */}
+        {!active && <NoteView />}
+        {!!active && <NothingSelectedView />}
+        {/* 
+        {!!active ? <NoteView /> : <NothingSelectedView />} */}
+
         <IconButton
+          onClick={onclickNewNota}
           size="large"
+          disabled={isSaving}
           sx={{
             color: "white",
             backgroundColor: "error.main",
-            ":hover": { backgroundColor: "error.main", opacity: 0.9 },
+            ":hover": { backgroundColor: "error.main", opacity: 0.5 },
             position: "fixed",
             right: 50,
             bottom: 50,

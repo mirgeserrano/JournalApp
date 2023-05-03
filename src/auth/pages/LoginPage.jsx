@@ -21,10 +21,11 @@ export const LoginPage = () => {
   const dispatch = useDispatch();
   const { status, errorMessage } = useSelector((state) => state.auth);
 
-  const { email, password, onInputChange } = useForm({
+  const formData = {
     email: "",
     password: "",
-  });
+  };
+  const { email, password, onInputChange } = useForm(formData);
 
   const isAunthenticating = useMemo(() => status === "cheking", [status]);
 
