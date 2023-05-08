@@ -9,7 +9,7 @@ import { useMemo } from "react";
 export const JournalPagen = () => {
   const dispatch = useDispatch();
   const { isSaving, active } = useSelector((state) => state.journal);
-  console.log(!active);
+  //console.log(!active);
 
   const onclickNewNota = () => {
     dispatch(starNewNota());
@@ -18,8 +18,8 @@ export const JournalPagen = () => {
   return (
     <>
       <JournalLayout>
-        {!active && <NoteView />}
-        {!!active && <NothingSelectedView />}
+        {!!active && <NoteView />}
+        {!active && <NothingSelectedView />}
         {/* 
         {!!active ? <NoteView /> : <NothingSelectedView />} */}
 
