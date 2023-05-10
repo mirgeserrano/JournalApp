@@ -17,9 +17,9 @@ import { startWinthEmailPassword } from "../../store/auth/thunks";
 export const RegisterPage = () => {
   const Dispatch = useDispatch();
   const ini = {
-    displayName: "",
-    email: "",
-    password: "123456",
+    displayName: "Username",
+    email: "mirge@gmail.com",
+    password: "1234567",
   };
 
   const er =

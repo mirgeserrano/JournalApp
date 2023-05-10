@@ -5,7 +5,7 @@ import { ImageGallery } from "../components";
 import { useForm } from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import { SetActiveNote } from "../../store/journal/journalSlice";
-import { starSaveNote } from "../../store/journal/thunks";
+import { starSaveNote, starUploadingFiles } from "../../store/journal/thunks";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.css";
 
@@ -43,8 +43,8 @@ export const NoteView = () => {
     if (target.files === 0) {
       return;
     }
-    console.log("subiendooooo");
-    dispatch;
+    //  console.log(target.files);
+    dispatch(starUploadingFiles(target.files));
   };
 
   return (
@@ -66,7 +66,7 @@ export const NoteView = () => {
         type="file"
         multiple
         style={{ display: "none" }}
-        onClick={onFileInputChange}
+        onChange={onFileInputChange}
         ref={fileInputRef}
       />
 
@@ -115,7 +115,7 @@ export const NoteView = () => {
           onChange={onInputChange}
         />
       </Grid>
-      <ImageGallery />
+      <ImageGallery images={active.imageUrls} />
     </Grid>
   );
 };

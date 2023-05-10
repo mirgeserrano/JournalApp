@@ -5,10 +5,13 @@ import {
   addNewEmptyNote,
   savingNewNote,
   setNotes,
+  setPhotosToActiveNote,
   setSaving,
   updateNote,
 } from "./journalSlice";
 import { loadNote } from "../../helpers/loadNote";
+import { fileUpload } from "../../helpers";
+import { Dialpad } from "@mui/icons-material";
 
 export const starNewNota = () => {
   return async (dispatch, getState) => {
@@ -51,10 +54,28 @@ export const starSaveNote = () => {
     const { active: note } = getState().journal;
     const noteToFireStore = { ...note };
     delete noteToFireStore.id;
+
     console.log(noteToFireStore);
+
     const DocRef = doc(FirebaseDB, `${uid}`, "jornal", "notes", `${note.id}`);
     await setDoc(DocRef, noteToFireStore);
 
     dispatch(updateNote(note));
+  };
+};
+
+export const starUploadingFiles = (files = []) => {
+  return async (dispatch) => {
+    dispatch(setSaving());
+    await fileUpload(files[0]);
+    const fileUploadPromises = [];
+    for (const file of files) {
+      fileUploadPromises.push(fileUpload(file));
+    }
+
+    const photosUrls = await Promise.all(fileUploadPromises);
+    console.log(photosUrls);
+    dispatch(setPhotosToActiveNote(photosUrls));
+    // console.log(files);
   };
 };
