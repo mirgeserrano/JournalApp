@@ -1,9 +1,9 @@
 # Proyect JournalApp 
 Realizado con 🔧
-- React 
-- mui/material
+- Reactjs
+- Material UI
 - Firebase
-- redux
+- Redux
 
 # Clone is repositore:
    git clone
