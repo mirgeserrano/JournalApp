@@ -3,6 +3,7 @@ Realizado con 🔧
 - React 
 - mui/material
 - Firebase
+- redux
 
 # Clone is repositore:
    git clone
