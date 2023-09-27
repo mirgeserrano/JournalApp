@@ -13,29 +13,33 @@ import { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { startWinthEmailPassword } from "../../store/auth/thunks";
+const ini = {
+  displayName: "Username",
+  email: "mirge@gmail.com",
+  password: "1234567",
+};
+
+const er =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+const formValidations = {
+  email: [(value) => er.test(value), "El correo es inválido"],
+  password: [(value) => value.length >= 6, "La contraseñan necesita 6 digitos"],
+  displayName: [
+    (value) => value.length >= 5,
+    "El nombre es obligatorio, asegúrate de que tenga más de 5 caracteres",
+  ],
+};
 
 export const RegisterPage = () => {
   const Dispatch = useDispatch();
-  const ini = {
-    displayName: "Username",
-    email: "mirge@gmail.com",
-    password: "1234567",
-  };
+  const [formSubmited, setformSubmited] = useState(false);
 
-  const er =
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-  const formValidations = {
-    email: [(value) => er.test(value), "El correo es inválido"],
-    password: [
-      (value) => value.length >= 6,
-      "La contraseñan necesita 6 digitos",
-    ],
-    displayName: [
-      (value) => value.length >= 5,
-      "El nombre es obligatorio, asegúrate de que tenga más de 5 caracteres",
-    ],
-  };
+  const { status, errorMessage } = useSelector((state) => state.auth);
+  const inCheckingAnthentication = useMemo(
+    () => status === "cheking",
+    [status]
+  );
 
   const {
     formState,
@@ -48,14 +52,7 @@ export const RegisterPage = () => {
     passwordValid,
     isFormValid,
   } = useForm(ini, formValidations);
-  console.log({ email });
 
-  const [formSubmited, setformSubmited] = useState(false);
-  const { status, errorMessage } = useSelector((state) => state.auth);
-  const inCheckingAnthentication = useMemo(
-    () => status === "cheking",
-    [status]
-  );
   const onSubmit = (event) => {
     event.preventDefault();
     setformSubmited(true);
@@ -63,12 +60,10 @@ export const RegisterPage = () => {
 
     Dispatch(startWinthEmailPassword(formState));
     console.log(formState);
-    // dispatch(checkingCredentials());
   };
 
   return (
     <AuthLayout title="Registrate. ">
-      {/* <h3>Form Valid</h3> {isFormValid ? "V" : "F"} */}
       <form onSubmit={onSubmit} className="animate__animated animate__fadeIn ">
         <Grid container>
           <Grid item xs={12} sx={{ mt: 2 }}>

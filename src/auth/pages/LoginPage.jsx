@@ -25,6 +25,7 @@ export const LoginPage = () => {
     email: "",
     password: "",
   };
+
   const { email, password, onInputChange } = useForm(formData);
 
   const isAunthenticating = useMemo(() => status === "cheking", [status]);
@@ -33,6 +34,7 @@ export const LoginPage = () => {
     event.preventDefault();
     dispatch(startLoginWithEmailPassaword({ email, password }));
   };
+
   const onGoogleSingIn = () => {
     console.log("onGoogleSingI");
     dispatch(startGoogleSignIn());
@@ -68,11 +70,13 @@ export const LoginPage = () => {
               onChange={onInputChange}
             />
           </Grid>
+
           <Grid item xs={12} display={errorMessage ? "" : "none"}>
             <Grid item xs={12} sx={{ mt: 2 }}>
               <Alert severity="error">{errorMessage}</Alert>
             </Grid>
           </Grid>
+          
           <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
             <Grid item xs={12} sm={6} sx={{ mb: 2 }}>
               <Button

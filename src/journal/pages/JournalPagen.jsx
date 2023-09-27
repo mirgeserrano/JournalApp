@@ -4,12 +4,12 @@ import { NoteView, NothingSelectedView } from "../views";
 import { AddOutlined } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { starNewNota } from "../../store/journal";
-import { useMemo } from "react";
+
 
 export const JournalPagen = () => {
   const dispatch = useDispatch();
   const { isSaving, active } = useSelector((state) => state.journal);
-  //console.log(!active);
+  console.log(active);
 
   const onclickNewNota = () => {
     dispatch(starNewNota());
@@ -20,8 +20,6 @@ export const JournalPagen = () => {
       <JournalLayout>
         {!!active && <NoteView />}
         {!active && <NothingSelectedView />}
-        {/* 
-        {!!active ? <NoteView /> : <NothingSelectedView />} */}
 
         <IconButton
           onClick={onclickNewNota}

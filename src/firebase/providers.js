@@ -7,12 +7,13 @@ import {
 } from "firebase/auth";
 import { FirebaseAuth } from "./config";
 import { login } from "../store/auth/authSlice";
-const googleProvider = new GoogleAuthProvider();
 
+const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
 
 export const singInWithGoogle = async () => {
   try {
+    
     const result = await signInWithPopup(FirebaseAuth, googleProvider);
     const { displayName, email, photoURL, uid } = result.user;
 
@@ -62,7 +63,7 @@ export const registerUserWithEmailPassword = async ({
       password,
     };
   } catch (error) {
-    // console.log(error);
+    
     return {
       ok: false,
       errorMessage: error.message,

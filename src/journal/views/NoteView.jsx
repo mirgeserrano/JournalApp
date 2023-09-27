@@ -1,28 +1,38 @@
-import { SaveOutlined, UploadFileOutlined } from "@mui/icons-material";
+import {
+  DeleteOutline,
+  SaveOutlined,
+  UploadFileOutlined,
+} from "@mui/icons-material";
 import { Button, Grid, IconButton, TextField, Typography } from "@mui/material";
 import React, { useEffect, useMemo, useRef } from "react";
 import { ImageGallery } from "../components";
 import { useForm } from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import { SetActiveNote } from "../../store/journal/journalSlice";
-import { starSaveNote, starUploadingFiles } from "../../store/journal/thunks";
+import {
+  starSaveNote,
+  starUploadingFiles,
+  startDeletingNote,
+} from "../../store/journal/thunks";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.css";
 
 export const NoteView = () => {
+  
   const dispatch = useDispatch();
+  
   const { active, messageSaved, isSaving } = useSelector(
     (state) => state.journal
   );
   //const { active: note } = useSelector((state) => state.journal);
-  //console.log(active);
+
   const { body, title, date, onInputChange, formState } = useForm(active);
 
   const dateString = useMemo(() => {
     const newData = new Date(date);
     return newData.toUTCString();
   }, [date]);
-  //console.log(body, title);
+
   const fileInputRef = useRef();
 
   useEffect(() => {
@@ -43,8 +53,11 @@ export const NoteView = () => {
     if (target.files === 0) {
       return;
     }
-    //  console.log(target.files);
     dispatch(starUploadingFiles(target.files));
+  };
+
+  const onDelete = () => {
+  dispatch(startDeletingNote());
   };
 
   return (
@@ -114,6 +127,12 @@ export const NoteView = () => {
           name="body"
           onChange={onInputChange}
         />
+      </Grid>
+      <Grid container justifyContent="end">
+        <button onClick={onDelete} sx={{ mt: 4 }} color="error">
+          <DeleteOutline />
+          Borrar
+        </button>
       </Grid>
       <ImageGallery images={active.imageUrls} />
     </Grid>
